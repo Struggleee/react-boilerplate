@@ -16,7 +16,7 @@ class Notice extends Component {
   }
 
   handleItemClick(item, tabProps) {
-    console.log(item, tabProps);
+    // console.log(item, tabProps);
   }
 
   handleClear(tabTitle) {

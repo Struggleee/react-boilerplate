@@ -1,3 +1,5 @@
+import { AnyAction } from 'redux';
+
 // Action Type
 export const types = {
   CHANGE_ACTIVE: 'layout/CHANGE_ACTIVE',
@@ -9,8 +11,9 @@ export const types = {
 export const actions = {
   /**
    * 改變sidebar所在的位置
+   * @param current - 現在的位置
    */
-  changeActive(current) {
+  changeActive(current: string) {
     return {
       type: types.CHANGE_ACTIVE,
       current,
@@ -19,9 +22,9 @@ export const actions = {
 
   /**
    * 摺疊sidebar
-   * @param {bool} collapsed - 是否摺疊
+   * @param collapsed - 是否摺疊
    */
-  collapse(collapsed) {
+  collapse(collapsed: boolean) {
     return {
       type: types.COLLAPSE,
       collapsed,
@@ -30,14 +33,22 @@ export const actions = {
 
   /**
    * 清空通知訊息
-   * @param {string} noticeType 類型 notice/message/todo
+   * @param noticeType - 類型 notice/message/todo
    */
-  clearNotice(noticeType) {
+  clearNotice(noticeType: string) {
     return {
       type: types.CLEAR_NOTICE,
       noticeType,
     };
   },
+};
+
+export interface IStoreState {
+  collapsed: boolean;
+  notice: any[];
+  sider: {
+    current: string;
+  };
 };
 
 const initialState = {
@@ -49,7 +60,10 @@ const initialState = {
 };
 
 // reducer
-export default (state = initialState, action) => {
+export default (
+  state: IStoreState = initialState,
+  action: AnyAction,
+): IStoreState => {
   switch (action.type) {
     case types.CHANGE_ACTIVE:
       return {

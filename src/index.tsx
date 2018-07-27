@@ -37,5 +37,5 @@ const Index = () => (
   </Provider>
 );
 
-ReactDOM.render(<Index />, document.getElementById('root'));
+ReactDOM.render(<Index />, document.getElementById('root') as HTMLElement);
 registerServiceWorker();

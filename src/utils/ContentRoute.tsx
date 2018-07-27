@@ -1,13 +1,14 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { Switch, Route } from 'react-router-dom';
 import RenderAuthorized from 'ant-design-pro/lib/Authorized';
+import { IMenus, IContentRoute } from './../types';
+
 import Home from './../components/Home';
 import NoMatch from './../components/Exception/NoMatch';
 import Forbidden from './../components/Exception/Forbidden';
 
-function formatter(menus = []) {
-  return menus.reduce((router, item) => {
+function formatter(menus: IMenus[]) {
+  return menus.reduce((router: IMenus[], item: IMenus) => {
     if (item.path && item.component) {
       router.push(item);
     } else if (item.children) {
@@ -18,7 +19,7 @@ function formatter(menus = []) {
   }, []);
 }
 
-const ContentRoute = ({ menus, permissions }) => {
+const ContentRoute = ({ menus, permissions }: IContentRoute) => {
   return (
     <Switch>
       <Route exact path="/" component={Home} />
@@ -37,11 +38,6 @@ const ContentRoute = ({ menus, permissions }) => {
       <Route component={NoMatch} />
     </Switch>
   );
-};
-
-ContentRoute.propTypes = {
-  menus: PropTypes.array.isRequired,
-  permissions: PropTypes.array.isRequired,
 };
 
 export default ContentRoute;

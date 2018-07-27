@@ -9,6 +9,7 @@ import { routerMiddleware } from 'react-router-redux';
 
 import { types } from './redux/user';
 import reducers from './reducers';
+import { IClaims } from './types';
 
 export const history = createHistory();
 
@@ -24,7 +25,7 @@ const loggerMiddleware = createLogger({
 let composeEnhancers = compose;
 if (process.env.NODE_ENV !== 'production') {
   middlewares = [...middlewares, loggerMiddleware];
-  composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+  composeEnhancers = (window as any).__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 }
 
 const enhancer = composeEnhancers(applyMiddleware(...middlewares));
@@ -33,7 +34,7 @@ const stores = createStore(reducers, enhancer);
 
 const token = localStorage.getItem('@Ricky:token');
 if (token) {
-  const decoded = jwtDecode(token);
+  const decoded: IClaims = jwtDecode(token);
 
   // token過期
   if (moment.unix(decoded.exp).isBefore(moment())) {
@@ -52,7 +53,7 @@ if (token) {
       address: decoded.address,
       roles: decoded.roles,
       permissions: decoded.permissions,
-      token: token,
+      token,
     });
   }
 }
